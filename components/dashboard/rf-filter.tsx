@@ -23,16 +23,16 @@ const pillBase: React.CSSProperties = {
 
 const pillSelected: React.CSSProperties = {
   ...pillBase,
-  background: '#1e2b6e',
+  background: '#1a2459',
   color: '#ffffff',
-  border: '1px solid #1e2b6e',
+  border: '1px solid #1a2459',
 };
 
 const pillUnselected: React.CSSProperties = {
   ...pillBase,
-  background: 'transparent',
-  color: '#333',
-  border: '1px solid #d0d0d0',
+  background: '#f5f7fa',
+  color: '#555',
+  border: '1px solid #e2e5ef',
 };
 
 export function RFFilterBar({ selectedMonth, selectedBU, onMonthChange, onBUChange }: RFFilterBarProps) {

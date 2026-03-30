@@ -9,7 +9,7 @@ interface SummaryPanelProps {
 
 const thStyle: React.CSSProperties = {
   padding: '3px 5px',
-  fontSize: '10px',
+  fontSize: '11px',
   fontWeight: 600,
   color: '#444',
   textAlign: 'right',
@@ -20,7 +20,7 @@ const thStyle: React.CSSProperties = {
 
 const tdBase: React.CSSProperties = {
   padding: '2px 5px',
-  fontSize: '10px',
+  fontSize: '11px',
   borderBottom: '1px solid #ececec',
   whiteSpace: 'nowrap',
 };
@@ -30,7 +30,7 @@ const tdRight: React.CSSProperties = { ...tdBase, textAlign: 'right' };
 const tdLabel: React.CSSProperties = {
   ...tdBase,
   textAlign: 'right',
-  fontSize: '10px',
+  fontSize: '11px',
   color: '#555',
   fontWeight: 500,
 };
