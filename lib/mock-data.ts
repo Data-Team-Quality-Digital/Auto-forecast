@@ -1,48 +1,7 @@
-import { BUSINESS_UNITS, MONTHS } from '@/lib/constants';
-import { DREGroup, EmployeePlan, InputRecord, KPI, MonthKey, TrendSeries } from '@/lib/types';
+import { MONTHS } from '@/lib/constants';
+import { DREGroup, EmployeePlan, InputRecord, MonthKey } from '@/lib/types';
 
 const monthNumbers = [420, 480, 520, 590, 630, 670, 710, 760, 800, 850, 910, 980];
-
-export const kpis: KPI[] = [
-  {
-    title: 'Revenue',
-    value: '$4,852,000',
-    baseline: '$4,600,000',
-    optimistic: '$5,120,000',
-    delta: '+5.4%',
-    tone: 'success',
-  },
-  {
-    title: 'Cost',
-    value: '$2,140,500',
-    baseline: '$2,000,000',
-    optimistic: '$1,950,000',
-    delta: '+7.0%',
-    tone: 'danger',
-  },
-  {
-    title: 'Margin',
-    value: '55.8%',
-    baseline: '56.5%',
-    optimistic: '61.0%',
-    delta: '-0.7%',
-    tone: 'brand',
-  },
-  {
-    title: 'People Cost',
-    value: '$845,000',
-    baseline: '$850,000',
-    optimistic: '$820,000',
-    delta: '-0.6%',
-    tone: 'neutral',
-  },
-];
-
-export const trendSeries: TrendSeries[] = [
-  { label: 'Actual', color: '#312E81', values: [220, 205, 235, 260, 218, 280, 246, 266, 301, 312, 330, 352] },
-  { label: 'Baseline', color: '#C7D2FE', values: [180, 212, 190, 248, 225, 251, 279, 286, 292, 305, 315, 340] },
-  { label: 'Optimistic', color: '#93C5FD', values: [245, 226, 203, 271, 236, 264, 288, 309, 321, 336, 354, 371] },
-];
 
 function buildMonthValues(multiplier: number) {
   return MONTHS.reduce((acc, month, index) => {
@@ -71,23 +30,6 @@ export const dreGroups: DREGroup[] = [
       { client: 'Delivery Team', classification: 'Partner Contractors', values: buildMonthValues(0.08) },
     ],
   },
-];
-
-export const dashboardInsights = [
-  {
-    title: 'Baseline alignment',
-    description: 'Actuals are trending 5% above baseline. Re-evaluate forecast assumptions for Q3.',
-  },
-  {
-    title: 'Optimistic gap',
-    description: 'Infrastructure constraints are preventing attainment of optimistic revenue targets in EMEA.',
-  },
-];
-
-export const regionalVariance = [
-  { region: 'North America', baseline: '+$120k', optimistic: '+$40k' },
-  { region: 'EMEA Region', baseline: '-$85k', optimistic: '-$210k' },
-  { region: 'APAC Emerging', baseline: '+$30k', optimistic: '+$12k' },
 ];
 
 export const inputRecords: InputRecord[] = [
@@ -159,8 +101,3 @@ export const employeePlans: EmployeePlan[] = [
     values: buildEmployeeValues(11100),
   },
 ];
-
-export const defaultFilters = {
-  month: 'mar' as MonthKey,
-  businessUnit: BUSINESS_UNITS[0],
-};

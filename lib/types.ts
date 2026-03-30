@@ -18,21 +18,6 @@ export type MonthOption = {
   index: number;
 };
 
-export type KPI = {
-  title: string;
-  value: string;
-  baseline: string;
-  optimistic: string;
-  delta: string;
-  tone: 'success' | 'danger' | 'brand' | 'neutral';
-};
-
-export type TrendSeries = {
-  label: string;
-  color: string;
-  values: number[];
-};
-
 export type DREMonthValue = {
   planned: number;
   actual: number;

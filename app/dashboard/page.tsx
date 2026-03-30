@@ -1,49 +1,73 @@
 'use client';
 
 import { useState } from 'react';
-import { FilterBar } from '@/components/dashboard/filter-bar';
-import { InsightsPanel } from '@/components/dashboard/insights-panel';
-import { KpiCard } from '@/components/dashboard/kpi-card';
-import { TrendChart } from '@/components/dashboard/trend-chart';
-import { AppShell } from '@/components/layout/app-shell';
-import { ButtonLink } from '@/components/ui/button';
-import { PageHeader } from '@/components/ui/page-header';
-import { defaultFilters, dashboardInsights, kpis, regionalVariance, trendSeries } from '@/lib/mock-data';
-import { MonthKey } from '@/lib/types';
+import { RFHeader } from '@/components/dashboard/rf-header';
+import { RFFilterBar } from '@/components/dashboard/rf-filter';
+import { MonthPanel } from '@/components/dashboard/rf-month-panel';
+import { TotalPanel } from '@/components/dashboard/rf-total-panel';
+import { MonthChart } from '@/components/dashboard/rf-chart';
+import { SummaryPanel } from '@/components/dashboard/rf-summary';
+import { getQuarterMonths } from '@/lib/rf-data';
 
 export default function DashboardPage() {
-  const [selectedMonth, setSelectedMonth] = useState<MonthKey>(defaultFilters.month);
-  const [selectedUnit, setSelectedUnit] = useState(defaultFilters.businessUnit);
+  const [selectedMonth, setSelectedMonth] = useState<string>('out');
+  const [selectedBU, setSelectedBU] = useState<string>('GRCT');
+
+  const quarterMonths = getQuarterMonths(selectedMonth);
 
   return (
-    <AppShell>
-      <div className="space-y-8">
-        <PageHeader
-          title="Executive Dashboard"
-          subtitle={`${selectedUnit} • ${selectedMonth.toUpperCase()} scenario comparison active`}
-          actions={
-            <>
-              <ButtonLink href="/dre" variant="secondary">DRE Grid</ButtonLink>
-              <ButtonLink href="/inputs">Additional Inputs</ButtonLink>
-            </>
-          }
-        />
-        <FilterBar
-          selectedMonth={selectedMonth}
-          selectedUnit={selectedUnit}
-          onMonthChange={setSelectedMonth}
-          onUnitChange={setSelectedUnit}
-        />
-        <div className="grid gap-6 xl:grid-cols-4">
-          {kpis.map((item) => (
-            <KpiCard key={item.title} item={item} />
+    <div
+      style={{
+        minHeight: '100vh',
+        background: '#f0f2f5',
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      }}
+    >
+      {/* Header */}
+      <RFHeader />
+
+      {/* Filter bar */}
+      <RFFilterBar
+        selectedMonth={selectedMonth}
+        selectedBU={selectedBU}
+        onMonthChange={setSelectedMonth}
+        onBUChange={setSelectedBU}
+      />
+
+      {/* Main content */}
+      <div style={{ padding: '8px', flex: 1 }}>
+        {/* Row 1: 3 monthly tables + total */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '6px',
+          }}
+        >
+          {quarterMonths.map((m) => (
+            <MonthPanel key={m} monthKey={m} buKey={selectedBU} />
           ))}
+          <TotalPanel monthKeys={quarterMonths} buKey={selectedBU} />
         </div>
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.7fr)_360px]">
-          <TrendChart series={trendSeries} />
-          <InsightsPanel insights={dashboardInsights} regionalVariance={regionalVariance} />
+
+        {/* Row 2: 3 bar charts + summary */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '6px',
+            marginTop: '6px',
+          }}
+        >
+          {quarterMonths.map((m) => (
+            <MonthChart key={m} monthKey={m} />
+          ))}
+          <SummaryPanel monthKeys={quarterMonths} buKey={selectedBU} />
         </div>
       </div>
-    </AppShell>
+    </div>
   );
 }

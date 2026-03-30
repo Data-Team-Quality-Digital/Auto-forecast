@@ -21,3 +21,21 @@ export const BUSINESS_UNITS = [
   'Cloud Infrastructure',
   'Strategy & Advisory',
 ];
+
+// Rolling Forecast constants
+export const RF_MONTHS = [
+  { key: 'jan', label: 'jan/26', prevLabel: 'jan/25' },
+  { key: 'fev', label: 'fev/26', prevLabel: 'fev/25' },
+  { key: 'mar', label: 'mar/26', prevLabel: 'mar/25' },
+  { key: 'abr', label: 'abr/26', prevLabel: 'abr/25' },
+  { key: 'mai', label: 'mai/26', prevLabel: 'mai/25' },
+  { key: 'jun', label: 'jun/26', prevLabel: 'jun/25' },
+  { key: 'jul', label: 'jul/26', prevLabel: 'jul/25' },
+  { key: 'ago', label: 'ago/26', prevLabel: 'ago/25' },
+  { key: 'set', label: 'set/26', prevLabel: 'set/25' },
+  { key: 'out', label: 'out/26', prevLabel: 'out/25' },
+  { key: 'nov', label: 'nov/26', prevLabel: 'nov/25' },
+  { key: 'dez', label: 'dez/26', prevLabel: 'dez/25' },
+];
+
+export const RF_BUS = ['4AT', 'DIG', 'ECOM', 'ECOM/DRV', 'GRCN', 'GRCT', 'GRO', 'IA', 'ITO', 'SIN', 'STRAT'];

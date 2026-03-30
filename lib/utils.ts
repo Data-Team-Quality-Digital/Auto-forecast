@@ -22,10 +22,6 @@ export function formatCompactCurrency(value: number) {
   }).format(value);
 }
 
-export function formatPercent(value: number) {
-  return `${value.toFixed(1)}%`;
-}
-
 export function getCurrentMonthKey(): MonthKey {
   return MONTHS[new Date().getMonth()].key;
 }
