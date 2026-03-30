@@ -227,22 +227,41 @@ export const RF_TOTAL_DATA: Record<string, RFRow[]> = {
   dez: totalQ4,
 };
 
+const ALL_MONTHS = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+
 export function getQuarterMonths(selectedMonth: string): string[] {
-  const quarters: Record<string, string[]> = {
-    jan: ['jan', 'fev', 'mar'],
-    fev: ['jan', 'fev', 'mar'],
-    mar: ['jan', 'fev', 'mar'],
-    abr: ['abr', 'mai', 'jun'],
-    mai: ['abr', 'mai', 'jun'],
-    jun: ['abr', 'mai', 'jun'],
-    jul: ['jul', 'ago', 'set'],
-    ago: ['jul', 'ago', 'set'],
-    set: ['jul', 'ago', 'set'],
-    out: ['out', 'nov', 'dez'],
-    nov: ['out', 'nov', 'dez'],
-    dez: ['out', 'nov', 'dez'],
-  };
-  return quarters[selectedMonth] ?? ['jan', 'fev', 'mar'];
+  const idx = ALL_MONTHS.indexOf(selectedMonth);
+  if (idx === -1) return ['jan', 'fev', 'mar'];
+  return [
+    ALL_MONTHS[idx % 12],
+    ALL_MONTHS[(idx + 1) % 12],
+    ALL_MONTHS[(idx + 2) % 12],
+  ];
+}
+
+export function computeTotal(months: string[]): RFRow[] {
+  const ROW_COUNT = 7;
+  return Array.from({ length: ROW_COUNT }, (_, rowIdx) => {
+    const monthRows = months.map((m) => RF_DATA[m]?.[rowIdx] ?? null);
+    const isPercent = rowIdx >= 5; // MB(%) and C.Indir./ROL are percent rows
+
+    const sumField = (field: keyof RFRow): number | null => {
+      const vals = monthRows.map((r) => (r ? (r[field] as number | null) : null));
+      const nonNull = vals.filter((v): v is number => v !== null);
+      if (nonNull.length === 0) return null;
+      if (isPercent) return nonNull.reduce((a, b) => a + b, 0) / nonNull.length;
+      return nonNull.reduce((a, b) => a + b, 0);
+    };
+
+    return {
+      label: monthRows[0]?.label ?? '',
+      prevYear: sumField('prevYear'),
+      orcado: sumField('orcado'),
+      realizado: sumField('realizado'),
+      varReal: sumField('varReal'),
+      isPercent,
+    };
+  });
 }
 
 export function formatBR(value: number | null, isPercent?: boolean): string {
